@@ -1,13 +1,10 @@
 "use client";
-
-import { useQuery, useConvexAuth } from "convex/react";
-import { api } from "../../convex/_generated/api";
 import { SignInButton, SignOutButton } from "@clerk/clerk-react";
 import { useEffect } from "react";
+import { useStoreUserEffect } from "./function/useStoreUserEffect";
 
 export default function Home() {
-  const tasks = useQuery(api.tasks.get);
-  const { isLoading, isAuthenticated } = useConvexAuth();
+  const { isLoading, isAuthenticated } = useStoreUserEffect();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -20,11 +17,6 @@ export default function Home() {
           <div className="bg-red-400 rounded shadow-xl p-4">
             <SignOutButton />
           </div>
-          {tasks?.map(({ _id, name }) => (
-            <div key={_id} className="text-white">
-              {name}
-            </div>
-          ))}
         </div>
       )}
     </main>
