@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.1",
     "@clerk/clerk-react": "^5.4.4",
+    "antd": "^5.20.4",
     "convex": "^1.14.4",
     "next": "14.2.7",
+    "openai": "^4.57.0",
     "react": "^18",
     "react-dom": "^18"
   },
