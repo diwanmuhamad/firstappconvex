@@ -18,7 +18,7 @@ import {
 } from "antd";
 import { useAction } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { LocationCard, DateCard } from "../components/tripcardpage";
+import { LocationCard, DateCard, TypeCard } from "../components/tripcardpage";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -35,6 +35,7 @@ const MainMenu: React.FC = () => {
   const [current, setCurrent] = useState<number>(0);
   const [location, setLocation] = useState<string>("");
   const [dateRange, setDateRange] = useState<[any,any] | null>(null)
+  const [type, setType] = useState<number>(1)
   const [answer, setAnswer] = useState<string | null>(null);
 
   const {
@@ -134,9 +135,9 @@ const MainMenu: React.FC = () => {
               <LocationCard location={location} setLocation={setLocation} />
             ) : current == 1 ? (
               <DateCard dateRange={dateRange} setDateRange={setDateRange}/>
-            ) : current == 2 ? null : current == 3 ? null : null}
+            ) : current == 2 ? <TypeCard type={type} setType={setType}/> : current == 3 ? null : null}
 
-            <Space className="mt-[80px] flex justify-between w-full px-[10%]">
+            <Space className="mt-[20px] sm:mt-[80px] flex justify-between w-full px-[10%]">
               <Button
                 style={{ display: current == 0 ? "none" : "block" }}
                 onClick={() => setCurrent((current) => current - 1)}
