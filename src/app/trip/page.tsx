@@ -18,7 +18,7 @@ import {
 } from "antd";
 import { useAction } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { LocationCard } from "../components/tripcardpage";
+import { LocationCard, DateCard } from "../components/tripcardpage";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -31,8 +31,10 @@ const items = [UserOutlined, VideoCameraOutlined, UploadOutlined].map(
 );
 
 const MainMenu: React.FC = () => {
-  const [message, setMessage] = useState("");
-  const [current, setCurrent] = useState(0);
+  const [message, setMessage] = useState<string>("");
+  const [current, setCurrent] = useState<number>(0);
+  const [location, setLocation] = useState<string>("");
+  const [dateRange, setDateRange] = useState<[any,any] | null>(null)
   const [answer, setAnswer] = useState<string | null>(null);
 
   const {
@@ -48,12 +50,11 @@ const MainMenu: React.FC = () => {
 
   const handleClickNext = () => {
     if (current == 3) {
-      setCurrent(0)
+      setCurrent(0);
+    } else {
+      setCurrent((current) => current + 1);
     }
-    else {
-      setCurrent((current) => current + 1)
-    }
-  }
+  };
 
   return (
     <Layout>
@@ -129,10 +130,22 @@ const MainMenu: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <LocationCard />
+            {current == 0 ? (
+              <LocationCard location={location} setLocation={setLocation} />
+            ) : current == 1 ? (
+              <DateCard dateRange={dateRange} setDateRange={setDateRange}/>
+            ) : current == 2 ? null : current == 3 ? null : null}
+
             <Space className="mt-[80px] flex justify-between w-full px-[10%]">
-              <Button style={{display: current == 0? "none" : "block"}} onClick={() => setCurrent((current) => current - 1)}>Back</Button>
-              <Button onClick={handleClickNext}>{current == 3 ? "Submit" : "Next"}</Button>
+              <Button
+                style={{ display: current == 0 ? "none" : "block" }}
+                onClick={() => setCurrent((current) => current - 1)}
+              >
+                Back
+              </Button>
+              <Button onClick={handleClickNext}>
+                {current == 3 ? "Submit" : "Next"}
+              </Button>
             </Space>
           </div>
         </Content>
