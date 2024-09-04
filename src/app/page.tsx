@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(()=> {
     if (isAuthenticated) {
-      router.push('/menu')
+      router.push('/trip')
     }
   },[isAuthenticated])
 
