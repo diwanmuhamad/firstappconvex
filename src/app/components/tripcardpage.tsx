@@ -1,9 +1,16 @@
 "use client";
 
 import React from "react";
-import { SearchOutlined, UserOutlined, UsergroupAddOutlined, HeartOutlined, HomeOutlined } from "@ant-design/icons";
-import { Input, DatePicker, Card, Space } from "antd";
-import dayjs from "dayjs";
+import {
+  SearchOutlined,
+  UserOutlined,
+  UsergroupAddOutlined,
+  HeartOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
+import { Input, DatePicker, Card, Space, Row, Result, Spin } from "antd";
+import { SelectBtnCard } from "./selectBtnCard";
+import PdfGenerator from "./pdfGenerator";
 
 const { RangePicker } = DatePicker;
 
@@ -21,6 +28,38 @@ interface TypeCardProps {
   type: number;
   setType: (e: number) => void;
 }
+
+interface CategoryCardProps {
+  category: string[];
+  setCategory: (e: string[]) => void;
+}
+
+interface PdfGeneratorProps {
+  location: string;
+  dateRange: string;
+  answer: string | null;
+  reset: () => void;
+}
+
+const contentStyle: React.CSSProperties = {
+  padding: 50,
+  background: "rgba(0, 0, 0, 0.05)",
+  borderRadius: 4,
+};
+
+const content = <div style={contentStyle} />;
+
+const categoryList: string[] = [
+  "Hidden Gems",
+  "Hiking and Nature",
+  "Sports",
+  "Outdoors",
+  "Culture",
+  "History",
+  "Amazing Food",
+  "Popular Attraction",
+  "Art Gallery",
+];
 
 export const LocationCard: React.FC<LocationCardProps> = ({
   location,
@@ -54,7 +93,6 @@ export const DateCard: React.FC<DateCardProps> = ({
         value={dateRange}
         onChange={(e) => {
           setDateRange([e?.[0], e?.[1]]);
-          console.log(e?.[0]);
         }}
         size={"large"}
         style={{ width: "60%", marginTop: "50px" }}
@@ -63,24 +101,66 @@ export const DateCard: React.FC<DateCardProps> = ({
   );
 };
 
-export const TypeCard: React.FC<TypeCardProps> = ({type, setType}) => {
+export const TypeCard: React.FC<TypeCardProps> = ({ type, setType }) => {
   return (
     <div className="text-center w-full p-4">
-      <h2 className="text-lg sm:text-3xl">What type of trip are you going to have?</h2>
+      <h2 className="text-lg sm:text-3xl">
+        What type of trip are you going to have?
+      </h2>
       <Space className="mt-8 flex-col sm:flex-row" size={"large"}>
-        <Card onClick={()=> setType(1)} style={{ minWidth: "100px",width: "15vw", height: 100,backgroundColor: `${type == 1? "#172554" : "white"}`, color: `${type == 1? "white" : "black"}` }} className="cursor-pointer">
-          <UserOutlined/>
+        <Card
+          onClick={() => setType(1)}
+          style={{
+            minWidth: "100px",
+            width: "15vw",
+            height: 100,
+            backgroundColor: `${type == 1 ? "#172554" : "white"}`,
+            color: `${type == 1 ? "white" : "black"}`,
+          }}
+          className="cursor-pointer"
+        >
+          <UserOutlined />
           <p>Solo Trip</p>
         </Card>
-        <Card onClick={()=>setType(2)} style={{ minWidth: "100px",width: "15vw", height: 100, backgroundColor: `${type == 2? "#172554" : "white"}`, color: `${type == 2? "white" : "black"}` }} className="cursor-pointer">
+        <Card
+          onClick={() => setType(2)}
+          style={{
+            minWidth: "100px",
+            width: "15vw",
+            height: 100,
+            backgroundColor: `${type == 2 ? "#172554" : "white"}`,
+            color: `${type == 2 ? "white" : "black"}`,
+          }}
+          className="cursor-pointer"
+        >
           <UsergroupAddOutlined />
           <p>Friends Trip</p>
         </Card>
-        <Card onClick={()=>setType(3)} style={{ minWidth: "100px",width: "15vw", height: 100, backgroundColor: `${type == 3? "#172554" : "white"}`, color: `${type == 3? "white" : "black"}`  }} className="cursor-pointer">
+        <Card
+          onClick={() => setType(3)}
+          style={{
+            minWidth: "100px",
+            width: "15vw",
+            height: 100,
+            backgroundColor: `${type == 3 ? "#172554" : "white"}`,
+            color: `${type == 3 ? "white" : "black"}`,
+          }}
+          className="cursor-pointer"
+        >
           <HeartOutlined />
           <p>Partner Trip</p>
         </Card>
-        <Card onClick={()=>setType(4)} style={{ minWidth: "100px",width: "15vw", height: 100, backgroundColor: `${type == 4? "#172554" : "white"}`, color: `${type == 4? "white" : "black"}`  }} className="cursor-pointer">
+        <Card
+          onClick={() => setType(4)}
+          style={{
+            minWidth: "100px",
+            width: "15vw",
+            height: 100,
+            backgroundColor: `${type == 4 ? "#172554" : "white"}`,
+            color: `${type == 4 ? "white" : "black"}`,
+          }}
+          className="cursor-pointer"
+        >
           <HomeOutlined />
           <p>Family Trip</p>
         </Card>
@@ -88,3 +168,55 @@ export const TypeCard: React.FC<TypeCardProps> = ({type, setType}) => {
     </div>
   );
 };
+
+export const CategoryCard: React.FC<CategoryCardProps> = ({
+  category,
+  setCategory,
+}) => {
+  return (
+    <div className="text-center w-full p-4">
+      <h2 className="text-lg sm:text-3xl">
+        What category are you interested for your trip?
+      </h2>
+      <Row gutter={[16, 16]} className="mt-8">
+        {categoryList.map((el, index) => (
+          <SelectBtnCard
+            key={index}
+            title={el}
+            category={category}
+            setCategory={setCategory}
+          />
+        ))}
+      </Row>
+    </div>
+  );
+};
+
+export const ResultCard: React.FC<PdfGeneratorProps> = ({
+  location,
+  dateRange,
+  answer,
+  reset
+}) => (
+  <>
+    {!answer ? (
+      <Spin tip="Generating PDF..." size="large">
+        {content}
+      </Spin>
+    ) : (
+      <>
+        <Result
+          status="success"
+          title="Successfully Generated Your Plan Trip PDF!"
+          subTitle="Click the download button below to save your pdf."
+        />
+        <PdfGenerator
+          location={location}
+          dateRange={dateRange}
+          answer={answer}
+          reset={reset}
+        />
+      </>
+    )}
+  </>
+);

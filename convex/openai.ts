@@ -3,7 +3,7 @@ import { action } from "./_generated/server";
 import { v } from "convex/values";
 
 const openai = new OpenAI({
-  apiKey: "6622344ef5cb44f4b2ddd7cfbcc7af0d",
+  apiKey: process.env.OPENAI_API_KEY,
   baseURL: "https://api.aimlapi.com",
 });
 
@@ -15,11 +15,11 @@ const openai = new OpenAI({
       const chatCompletion = await openai.chat.completions.create({
           model: "mistralai/Mistral-7B-Instruct-v0.2",
           messages: [
-            { role: "system", content: "You are a travel agent. Be descriptive and helpful" },
+            { role: "system", content: "You are a travel guide. Create unlisted itinerary items and be helpful" },
             { role: "user", content: args.input }
           ],
           temperature: 0.7,
-          max_tokens: 128,
+          max_tokens: 500,
         });
 
         return chatCompletion.choices[0].message.content

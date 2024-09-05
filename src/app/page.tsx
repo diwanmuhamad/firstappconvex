@@ -1,5 +1,5 @@
 "use client";
-import { SignInButton, SignOutButton } from "@clerk/clerk-react";
+import { SignInButton} from "@clerk/clerk-react";
 import { useEffect } from "react";
 import { useStoreUserEffect } from "./function/useStoreUserEffect";
 import { useRouter } from 'next/navigation'
@@ -20,13 +20,7 @@ export default function Home() {
           <div className="bg-red-400 rounded shadow-xl p-4">
             <SignInButton mode="modal" />
           </div>
-        ) : (
-          <div>
-            {/* <div className="bg-red-400 rounded shadow-xl p-4">
-              <SignOutButton />
-            </div> */}
-          </div>
-        )}
+        ) : null}
       </main>
   );
 }
