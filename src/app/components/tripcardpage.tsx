@@ -10,10 +10,13 @@ import {
 } from "@ant-design/icons";
 import { Input, DatePicker, Card, Space, Row, Result, Spin } from "antd";
 import { SelectBtnCard } from "./selectBtnCard";
+import type { DatePickerProps, GetProps } from "antd";
 import PdfGenerator from "./pdfGenerator";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 const { RangePicker } = DatePicker;
-
+type RangePickerProps = GetProps<typeof DatePicker.RangePicker>;
 interface LocationCardProps {
   location: string;
   setLocation: (e: string) => void;
@@ -61,6 +64,36 @@ const categoryList: string[] = [
   "Art Gallery",
 ];
 
+const getYearMonth = (date: Dayjs) => date.year() * 12 + date.month();
+
+const disabled2DaysDate: RangePickerProps["disabledDate"] = (
+  current,
+  { from, type }
+) => {
+  if (from) {
+    const minDate = from.add(-2, "days");
+    const maxDate = from.add(2, "days");
+
+    switch (type) {
+      case "year":
+        return (
+          current.year() < minDate.year() || current.year() > maxDate.year()
+        );
+
+      case "month":
+        return (
+          getYearMonth(current) < getYearMonth(minDate) ||
+          getYearMonth(current) > getYearMonth(maxDate)
+        );
+
+      default:
+        return Math.abs(current.diff(from, "days")) >= 2;
+    }
+  }
+
+  return false;
+};
+
 export const LocationCard: React.FC<LocationCardProps> = ({
   location,
   setLocation,
@@ -90,6 +123,8 @@ export const DateCard: React.FC<DateCardProps> = ({
     <div className="text-center w-full p-4">
       <h2 className="text-3xl">How long is your trip?</h2>
       <RangePicker
+        disabledDate={disabled2DaysDate}
+        minDate={dayjs(Date.now())}
         value={dateRange}
         onChange={(e) => {
           setDateRange([e?.[0], e?.[1]]);
@@ -196,7 +231,7 @@ export const ResultCard: React.FC<PdfGeneratorProps> = ({
   location,
   dateRange,
   answer,
-  reset
+  reset,
 }) => (
   <>
     {!answer ? (

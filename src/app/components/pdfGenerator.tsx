@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { PdfBody } from "./pdfBody";
 
 interface PdfGeneratorProps {
   location: string;
@@ -61,7 +62,7 @@ const PdfGenerator: React.FC<PdfGeneratorProps> = ({
 
         {/* Body Content */}
         <div style={styles.body}>
-          <p style={styles.text}>{answer}</p>
+          <PdfBody text={answer} />
 
           {/* Example image (You can replace the image URL) */}
         </div>
@@ -73,7 +74,7 @@ const PdfGenerator: React.FC<PdfGeneratorProps> = ({
       </div>
       <div className="w-full flex justify-center">
         <button onClick={reset} style={styles.buttonBack}>
-          Back
+          Cancel
         </button>
         <button onClick={generatePDF} style={styles.button}>
           Download PDF
@@ -95,7 +96,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "8px",
     padding: "20px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    display: "none",
+    // display: "none",
   },
   banner: {
     backgroundColor: "#f0f8ff",
