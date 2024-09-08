@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 interface PdfBodyProps {
   text: string | null;
@@ -31,8 +31,32 @@ const updateText = (text: string | null) => {
 };
 
 export const PdfBody: React.FC<PdfBodyProps> = ({ text }) => {
+  const [objTrip, setObjTrip] = useState<ObjTrip[]>(updateText(text));
+
   useEffect(() => {
     console.log(updateText(text));
   }, []);
-  return <div>{text}</div>;
+  return (
+    <>
+      {objTrip.map((el, index) => {
+        return (
+          <div key={index}>
+            <h2 className="my-4 font-bold text-xl">{el.title}</h2>
+            {el.content.map((el2, index2) => {
+              return (
+                <div key={index2}>
+                  <h3 className="my-2 font-bold text-lg">{el2[0]}</h3>
+                  {Array(el2.length - 1)
+                    .fill("")
+                    .map((el3, index) => {
+                      return <div key={index}>{el2[index + 1]}</div>;
+                    })}
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+    </>
+  );
 };

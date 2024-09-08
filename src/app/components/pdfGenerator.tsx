@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { PdfBody } from "./pdfBody";
+import { Flex } from "antd";
 
 interface PdfGeneratorProps {
   location: string;
@@ -61,7 +62,7 @@ const PdfGenerator: React.FC<PdfGeneratorProps> = ({
         </div>
 
         {/* Body Content */}
-        <div style={styles.body}>
+        <div style={styles.body} className="px-6">
           <PdfBody text={answer} />
 
           {/* Example image (You can replace the image URL) */}
@@ -96,23 +97,24 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "8px",
     padding: "20px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    // display: "none",
+    display: "none",
   },
   banner: {
-    backgroundColor: "#f0f8ff",
-    padding: "20px",
+    backgroundColor: "#023047",
+    paddingTop: "10px",
+    paddingBottom: "30px",
     borderRadius: "8px",
     textAlign: "center",
   },
   title: {
     margin: 0,
-    color: "#4A90E2",
-    fontSize: "24px",
+    color: "#fff",
+    fontSize: "20px",
     fontWeight: "bold",
   },
   subtitle: {
     margin: 0,
-    color: "#333",
+    color: "#fff",
     fontSize: "16px",
   },
   body: {
@@ -133,7 +135,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     bottom: "20px",
     width: "100%",
     textAlign: "center",
-    borderTop: "1px solid #ccc",
+    // borderTop: "1px solid #ccc",
     paddingTop: "10px",
   },
   footerText: {

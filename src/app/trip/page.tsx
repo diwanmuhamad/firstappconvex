@@ -5,6 +5,7 @@ import { Layout, theme, Button, Space, Steps, ConfigProvider } from "antd";
 import { SignOutButton, useUser } from "@clerk/clerk-react";
 import { useAction } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import type { Dayjs } from "dayjs";
 import {
   LocationCard,
   DateCard,
@@ -21,7 +22,7 @@ const typeList = ["Solo Trip", "Friends Trip", "Partner Trip", "Family Trip"];
 const MainMenu: React.FC = () => {
   const [current, setCurrent] = useState<number>(0);
   const [location, setLocation] = useState<string>("");
-  const [dateRange, setDateRange] = useState<[any, any] | null>(null);
+  const [dateRange, setDateRange] = useState<[Dayjs, Dayjs] | null>(null);
   const [type, setType] = useState<number>(1);
   const [category, setCategory] = useState<string[]>([]);
   const [answer, setAnswer] = useState<string | null>(null);
@@ -35,7 +36,7 @@ const MainMenu: React.FC = () => {
   const sendMessage = useAction(api.openai.chat);
   const handleSubmit = async () => {
     let msg = `Plan a trip to ${location} from ${dateRange?.[0].format("DD MMMM YYYY")} to ${dateRange?.[1].format("DD MMMM YYYY")} as ${typeList[type - 1]} with interest in ${category.join(", ")}.
-      With this kind of format example:
+      With this kind of format example (looping the same format for the next day):
       @@Day 1: Explore Busan's Landmarks
 
       @!1. Morning: Gamcheon Culture Village

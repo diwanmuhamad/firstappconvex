@@ -12,7 +12,7 @@ export const chat = action({
   handler: async (ctx, args) => {
     // do something with data
     const chatCompletion = await openai.chat.completions.create({
-      model: "mistralai/Mistral-7B-Instruct-v0.2",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system",

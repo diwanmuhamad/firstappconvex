@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Input, DatePicker, Card, Space, Row, Result, Spin } from "antd";
 import { SelectBtnCard } from "./selectBtnCard";
-import type { DatePickerProps, GetProps } from "antd";
+import type { GetProps } from "antd";
 import PdfGenerator from "./pdfGenerator";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
