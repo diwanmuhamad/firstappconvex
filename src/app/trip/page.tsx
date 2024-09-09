@@ -35,8 +35,8 @@ const MainMenu: React.FC = () => {
 
   const sendMessage = useAction(api.openai.chat);
   const handleSubmit = async () => {
-    let msg = `Plan a trip to ${location} from ${dateRange?.[0].format("DD MMMM YYYY")} to ${dateRange?.[1].format("DD MMMM YYYY")} as ${typeList[type - 1]} with interest in ${category.join(", ")}.
-      With this kind of format example (looping the same format for the next day):
+    let msg = `Plan a trip to ${location} from ${dateRange?.[0].format("DD MMMM YYYY")} to ${dateRange?.[1].format("DD MMMM YYYY")} as ${typeList[type - 1]} with interest in ${category.join(", ")}. Make it maximum 3 item timeline perday.
+      With this kind of format example(if the daterange trip no more than 1 day):
       @@Day 1: Explore Busan's Landmarks
 
       @!1. Morning: Gamcheon Culture Village
