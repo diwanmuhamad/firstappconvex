@@ -3,7 +3,7 @@ import { v } from "convex/values";
 
 export default defineSchema({
   query: defineTable({
-    userId: v.id("users"),
+    userId: v.string(),
     location: v.string(),
     start: v.string(),
     end: v.string(),

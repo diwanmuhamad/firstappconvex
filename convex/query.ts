@@ -2,7 +2,7 @@ import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
 export const getQuery = query({
-  args: { userId: v.id("users") },
+  args: { userId: v.string() },
   handler: async (ctx, args) => {
     const query = await ctx.db
       .query("query")
@@ -15,7 +15,7 @@ export const getQuery = query({
 
 export const insertQuery = mutation({
   args: {
-    userId: v.id("users"),
+    userId: v.string(),
     location: v.string(),
     start: v.string(),
     end: v.string(),
