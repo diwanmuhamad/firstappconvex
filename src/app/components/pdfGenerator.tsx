@@ -44,7 +44,7 @@ const PdfGenerator: React.FC<PdfGeneratorProps> = ({
 
       // Add the image to the PDF and save it
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("download.pdf");
+      pdf.save(`Trip to ${capitalizeEveryWord(location)}.pdf`);
 
       input.style.display = originalDisplay;
     }
@@ -97,6 +97,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "8px",
     padding: "20px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    margin: "auto",
     display: "none",
   },
   banner: {
