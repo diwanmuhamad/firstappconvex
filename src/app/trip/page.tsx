@@ -16,6 +16,7 @@ import { SignOutButton, useUser } from "@clerk/clerk-react";
 import { useAction, useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import type { TableProps } from "antd";
 import {
   LocationCard,
@@ -42,48 +43,6 @@ interface HistoryType {
   category: string;
 }
 
-const columns: TableProps<HistoryType>["columns"] = [
-  {
-    title: "Location",
-    dataIndex: "location",
-    key: "location",
-    render: (text) => <p>{text}</p>,
-  },
-  {
-    title: "Start Date",
-    dataIndex: "start",
-    key: "start",
-    render: (text) => <p>{text}</p>,
-  },
-  {
-    title: "End Date",
-    dataIndex: "end",
-    key: "end",
-    render: (text) => <p>{text}</p>,
-  },
-  {
-    title: "Trip Type",
-    dataIndex: "type",
-    key: "type",
-    render: (text) => <p>{text}</p>,
-  },
-  {
-    title: "Trip Category",
-    dataIndex: "category",
-    key: "category",
-    render: (text) => <p>{text}</p>,
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <Button>Use</Button>
-      </Space>
-    ),
-  },
-];
-
 const MainMenu: React.FC = () => {
   const [current, setCurrent] = useState<number>(0);
   const [location, setLocation] = useState<string>("");
@@ -94,7 +53,47 @@ const MainMenu: React.FC = () => {
 
   //for trip history modal
   const [openModal, setOpenModal] = React.useState<boolean>(false);
-
+  const columns: TableProps<HistoryType>["columns"] = [
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "Start Date",
+      dataIndex: "start",
+      key: "start",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "End Date",
+      dataIndex: "end",
+      key: "end",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "Trip Type",
+      dataIndex: "type",
+      key: "type",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "Trip Category",
+      dataIndex: "category",
+      key: "category",
+      render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button onClick={() => handleClickUseHistory(record)}>Use</Button>
+        </Space>
+      ),
+    },
+  ];
   const { user } = useUser();
 
   const userId: string = user?.id ?? "";
@@ -175,6 +174,18 @@ const MainMenu: React.FC = () => {
     } else {
       setCurrent((current) => current + 1);
     }
+  };
+
+  const handleClickUseHistory = (args: HistoryType) => {
+    setLocation(args.location);
+    setType(Number(args.type));
+    setDateRange([
+      dayjs(args.start, "DD/MMMM/YYYY"),
+      dayjs(args.end, "DD/MMMM/YYYY"),
+    ]);
+    setCategory(args.category.split(", "));
+    setCurrent(3);
+    setOpenModal(false);
   };
 
   return (

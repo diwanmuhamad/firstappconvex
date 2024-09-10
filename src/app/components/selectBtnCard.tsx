@@ -30,6 +30,12 @@ export const SelectBtnCard: React.FC<SelectBtnCardProps> = ({
     }
   }, [selected]);
 
+  useEffect(() => {
+    if (category.includes(title)) {
+      setSelected(true);
+    }
+  }, [category]);
+
   return (
     <Col className="gutter-row" xs={12} md={6}>
       <Card
