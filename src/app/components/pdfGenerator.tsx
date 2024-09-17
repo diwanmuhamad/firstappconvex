@@ -62,8 +62,13 @@ const PdfGenerator: React.FC<PdfGeneratorProps> = ({
         </div>
 
         {/* Body Content */}
-        <div style={styles.body} className="px-6">
-          <PdfBody text={answer} />
+        <div
+          style={styles.body}
+          className="px-6"
+          dangerouslySetInnerHTML={{ __html: answer ?? "" }}
+        >
+          {/* <PdfBody text={answer} /> */}
+          {/* <p>{answer}</p> */}
 
           {/* Example image (You can replace the image URL) */}
         </div>

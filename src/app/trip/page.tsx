@@ -139,20 +139,8 @@ const MainMenu: React.FC = () => {
 
   const sendMessage = useAction(api.openai.chat);
   const handleSubmit = async () => {
-    let msg = `Plan a trip to ${location} from ${dateRange?.[0].format("DD MMMM YYYY")} to ${dateRange?.[1].format("DD MMMM YYYY")} as ${typeList[type - 1]} with interest in ${category.join(", ")}. Make it maximum 3 item timeline perday. Make the description of itinerary only 1 brief sentence.
-      With this kind of format example(loop with the same format if the daterange is more than 1 day):
-      @@Day 1: Explore Busan's Landmarks
+    let msg = `Plan a trip to ${location} from ${dateRange?.[0].format("DD MMMM YYYY")} to ${dateRange?.[1].format("DD MMMM YYYY")} as ${typeList[type - 1]} with interest in ${category[0]}.  Make it with structured HTML tag (without head and body).`;
 
-      @!1. Morning: Gamcheon Culture Village
-      @$Time: 2-3 hours (07.00 am - 10.00 am)
-      @$Start your day at the vibrant Gamcheon Culture Village. Explore the colorful alleyways, take photos of the unique houses, and enjoy the local art installations.
-      @!2. Afternoon: Yongdusan Park and Busan Tower
-      @$Time: 1.5-2 hours (11.00 am - 13.00 pm)
-      @$After lunch, visit Yongdusan Park for some fresh air and scenic views. Climb up to Busan Tower for a panoramic view of the city.
-      @!3. Evening: Dinner at Gwangalli Beach
-      @$Time: 2 hours (18.00 pm - 20.00 pm)
-      @$For dinner, head to Gwangalli Beach. Enjoy a beachfront meal while taking in the stunning view of Gwangan Bridge, especially when it lights up at night.
-    `;
     const answer = sendMessage({ input: msg });
     setAnswer(await answer);
   };
