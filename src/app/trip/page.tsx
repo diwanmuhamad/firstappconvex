@@ -139,7 +139,7 @@ const MainMenu: React.FC = () => {
 
   const sendMessage = useAction(api.openai.chat);
   const handleSubmit = async () => {
-    let msg = `Plan a trip to ${location} from ${dateRange?.[0].format("DD MMMM YYYY")} to ${dateRange?.[1].format("DD MMMM YYYY")} as ${typeList[type - 1]} with interest in ${category[0]}.  Make it with structured HTML tag (without head and body).`;
+    let msg = `Plan a trip to ${location} from ${dateRange?.[0].format("DD MMMM YYYY")} to ${dateRange?.[1].format("DD MMMM YYYY")} as ${typeList[type - 1]} with interest in ${category[0]}.  Make it with structured HTML tag (without head and body tag).`;
 
     const answer = sendMessage({ input: msg });
     setAnswer(await answer);
